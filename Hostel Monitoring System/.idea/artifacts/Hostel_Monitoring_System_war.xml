@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Hostel Monitoring System:war">
+    <output-path>$PROJECT_DIR$/../Hostel Monitoring System/target</output-path>
+    <root id="archive" name="hostel.war">
+      <element id="artifact" artifact-name="Hostel Monitoring System:war exploded" />
+    </root>
+  </artifact>
+</component>
