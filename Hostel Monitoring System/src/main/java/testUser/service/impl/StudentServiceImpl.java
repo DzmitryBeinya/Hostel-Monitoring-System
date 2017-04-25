@@ -1,6 +1,7 @@
 package testUser.service.impl;
 
 import testUser.DAO.impl.StudentDao;
+import testUser.entities.Mark;
 import testUser.entities.Student;
 import testUser.service.StudentService;
 
@@ -30,5 +31,9 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void addStudent(Student student) {
         studentDao.addStudent(student);
+    }
+    @Override
+    public void addMark(Mark mark) {
+        studentDao.addMark(mark);
     }
 }

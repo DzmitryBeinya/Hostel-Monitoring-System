@@ -5,10 +5,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import testUser.entities.Mark;
 import testUser.entities.Room;
 import testUser.entities.Student;
 import testUser.service.StudentService;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -53,6 +55,17 @@ public class StudentController {
         student.setRoomNumber("111a");
         studentService.addStudent(student);
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/addMark")
+    public void addMark() {
+        Mark mark = new Mark();
+        mark.setValue(5);
+        mark.setDate(new Date(201744));
+        mark.setRoomNumber("111a");
+        studentService.addMark(mark);
+    }
+
+
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }

@@ -2,15 +2,19 @@ package testUser.DAO.impl;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import testUser.DAO.UserDAO;
+import testUser.entities.Mark;
 import testUser.entities.Room;
 import testUser.entities.Student;
 import testUser.entities.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by dzbe1116 on 4/20/2017.
@@ -18,6 +22,8 @@ import java.util.List;
 public class StudentDao implements UserDAO {
 
     private JdbcTemplate jdbcTemplate;
+
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     private final RowMapper<Student> ROW_MAPPER = (rs, rowNum) -> {
         Student student = new Student();
@@ -35,8 +41,9 @@ public class StudentDao implements UserDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public StudentDao(JdbcTemplate jdbcTemplate) {
+    public StudentDao(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
     @Override
@@ -72,6 +79,16 @@ public class StudentDao implements UserDAO {
                 student.getFaculty(),
                 student.getGroup(),
                 student.getRoomNumber());
+    }
+
+    @Override
+    public void addMark(Mark mark) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("id", 56);
+        params.put("mh_value", mark.getValue());
+        params.put("mh_date", mark.getDate());
+        params.put("mh_room", mark.getRoomNumber());
+        namedParameterJdbcTemplate.update(SQL_ADD_MARK, params);
     }
 
     private Room selectRoomByStudentIdwithJDBCTemplate(int id) {

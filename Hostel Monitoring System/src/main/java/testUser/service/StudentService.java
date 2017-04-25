@@ -1,5 +1,6 @@
 package testUser.service;
 
+import testUser.entities.Mark;
 import testUser.entities.Student;
 
 import java.util.List;
@@ -11,4 +12,5 @@ public interface StudentService {
     Student getStudentById(int id);
     List<Student> getAllStudentsFromHostel();
     void addStudent(Student student);
+    void addMark(Mark mark);
 }

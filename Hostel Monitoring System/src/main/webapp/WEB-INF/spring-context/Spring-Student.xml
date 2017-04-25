@@ -7,8 +7,13 @@
         <constructor-arg ref="dataSource"/>
     </bean>
 
+    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
     <bean id="studentDao" class="testUser.DAO.impl.StudentDao">
         <constructor-arg name="jdbcTemplate" ref="jdbcTemplate"/>
+        <constructor-arg name="namedParameterJdbcTemplate" ref="namedParameterJdbcTemplate"/>
     </bean>
 
     <bean id="studentService" class="testUser.service.impl.StudentServiceImpl">

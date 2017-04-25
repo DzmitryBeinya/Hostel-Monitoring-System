@@ -1,5 +1,6 @@
 package testUser.DAO;
 
+import testUser.entities.Mark;
 import testUser.entities.Student;
 import testUser.entities.User;
 
@@ -14,6 +15,7 @@ public interface UserDAO {
     Student selectStudentByIdWithJDBCTemplate(int id);
     List<Student> selectAllStudentsFromHostel();
     void addStudent(Student student);
+    void addMark(Mark mark);
 
     String SQL_SELECT_STUDENT_BY_ID = "select * from student where id = ?";
     String SQL_SELECT_ROOM_BY_STUDENT_ID = "select r.ro_number,r.ro_places,r.ro_free_places, r.ro_floor from hostel_schema.room r\n" +
@@ -23,4 +25,7 @@ public interface UserDAO {
     String SQL_SELECT_ALL_STUDENTS_FROM_HOSTEL = "select * from hostel_schema.student";
     String SQL_ADD_STUDENT = "insert into hostel_schema.student\n" +
             "values(?, ?, ?, ?, ?, ?, ?)";
+    String SQL_ADD_MARK =
+            "insert into hostel_schema.mark_history(id, mh_value, mh_date, mh_room)\n" +
+                    "values(:id, :mh_value, :mh_date, :mh_room)";
 }
