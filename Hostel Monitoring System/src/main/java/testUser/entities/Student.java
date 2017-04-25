@@ -10,6 +10,7 @@ public class Student {
     private String university;
     private String faculty;
     private String group;
+    private String roomNumber;
     private Room room;
 
     @Override
@@ -21,11 +22,24 @@ public class Student {
                 ", university='" + university + '\'' +
                 ", faculty='" + faculty + '\'' +
                 ", group='" + group + '\'' +
-                ", room number=" + room.getNumber() + '\'' +
-                ", room places=" + room.getPlaces() + '\'' +
-                ", room free_places=" + room.getFree_places() + '\'' +
-                ", room floor=" + room.getFloor() + '\'' +
+                ", room number=" + roomNumber + '\'' +
                 '}';
+    }
+
+    public String getUniversity() {
+        return university;
+    }
+
+    public void setUniversity(String university) {
+        this.university = university;
+    }
+
+    public String getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(String roomNumber) {
+        this.roomNumber = roomNumber;
     }
 
     public Student(){

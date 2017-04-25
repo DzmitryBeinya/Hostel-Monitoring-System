@@ -10,6 +10,7 @@ import testUser.entities.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Created by dzbe1116 on 4/20/2017.
@@ -52,6 +53,25 @@ public class StudentDao implements UserDAO {
     @Override
     public Student selectStudentByIdWithJDBCTemplate(int id) {
         return jdbcTemplate.queryForObject(SQL_SELECT_STUDENT_BY_ID, ROW_MAPPER, id);
+    }
+
+    @Override
+    public List<Student> selectAllStudentsFromHostel() {
+        List<Student> allStudentsFromHostel = this.jdbcTemplate.query(SQL_SELECT_ALL_STUDENTS_FROM_HOSTEL,
+                ROW_MAPPER);
+        return allStudentsFromHostel;
+    }
+
+    @Override
+    public void addStudent(Student student) {
+        jdbcTemplate.update(SQL_ADD_STUDENT,
+                student.getId(),
+                student.getName(),
+                student.getSurname(),
+                student.getUnivercity(),
+                student.getFaculty(),
+                student.getGroup(),
+                student.getRoomNumber());
     }
 
     private Room selectRoomByStudentIdwithJDBCTemplate(int id) {
