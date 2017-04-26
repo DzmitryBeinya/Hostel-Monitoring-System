@@ -1,6 +1,8 @@
 package testUser.service.impl;
 
-import testUser.DAO.impl.StudentDao;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import testUser.DAO.impl.JdbcStudentDao;
 import testUser.entities.Mark;
 import testUser.entities.Student;
 import testUser.entities.WorkHour;
@@ -11,36 +13,52 @@ import java.util.List;
 /**
  * Created by dzbe1116 on 4/21/2017.
  */
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class StudentServiceImpl implements StudentService {
 
-    StudentDao studentDao;
+    JdbcStudentDao jdbcStudentDao;
 
-    public StudentServiceImpl(StudentDao studentDao) {
-        this.studentDao = studentDao;
+    public StudentServiceImpl(JdbcStudentDao jdbcStudentDao) {
+        this.jdbcStudentDao = jdbcStudentDao;
     }
 
     @Override
     public Student getStudentById(int id) {
-        return studentDao.selectStudentByIdWithJDBCTemplate(id);
+        return jdbcStudentDao.selectStudentByIdWithJDBCTemplate(id);
     }
 
     @Override
     public List<Student> getAllStudentsFromHostel() {
-        return studentDao.selectAllStudentsFromHostel();
+        return jdbcStudentDao.selectAllStudentsFromHostel();
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void addStudent(Student student) {
-        studentDao.addStudent(student);
+        jdbcStudentDao.addStudent(student);
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+    public void updateStudentInformation(Student student) {
+        jdbcStudentDao.updateStudentInformation(student);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+    public void deleteWorkHours(int id) {
+        jdbcStudentDao.deleteFromWorkHoursHistory(id);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void addWorkHours(WorkHour workHour) {
-        studentDao.addWorkHours(workHour);
+        jdbcStudentDao.addWorkHours(workHour);
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void addMark(Mark mark) {
-        studentDao.addMark(mark);
+        jdbcStudentDao.addMark(mark);
     }
 }

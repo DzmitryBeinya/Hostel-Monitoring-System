@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
         <constructor-arg ref="dataSource"/>
@@ -11,13 +20,18 @@
         <constructor-arg ref="dataSource"/>
     </bean>
 
-    <bean id="studentDao" class="testUser.DAO.impl.StudentDao">
+    <bean id="jdbcStudentDao" class="testUser.DAO.impl.JdbcStudentDao">
         <constructor-arg name="jdbcTemplate" ref="jdbcTemplate"/>
         <constructor-arg name="namedParameterJdbcTemplate" ref="namedParameterJdbcTemplate"/>
     </bean>
 
     <bean id="studentService" class="testUser.service.impl.StudentServiceImpl">
-        <constructor-arg name="studentDao" ref="studentDao"/>
+        <constructor-arg name="jdbcStudentDao" ref="jdbcStudentDao"/>
+    </bean>
+
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
     </bean>
 
     <!--<bean id="studentController" class="testUser.controller.StudentController">-->

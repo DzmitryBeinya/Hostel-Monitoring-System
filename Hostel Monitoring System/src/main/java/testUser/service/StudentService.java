@@ -15,4 +15,6 @@ public interface StudentService {
     void addStudent(Student student);
     void addMark(Mark mark);
     void addWorkHours(WorkHour workHour);
+    void deleteWorkHours(int id);
+    void updateStudentInformation(Student student);
 }

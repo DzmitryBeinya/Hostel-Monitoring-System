@@ -79,6 +79,23 @@ public class StudentController {
         studentService.addWorkHours(workHour);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/deleteWorkHours/{id}")
+    public void deleteWorkHours(@PathVariable("id") int id) throws ParseException {
+        studentService.deleteWorkHours(id);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/updateStudent")
+    public void updateStudentInformation() {
+       Student student = new Student();
+       student.setId(15);
+       student.setName("Stas");
+       student.setSurname("Malinovsky");
+       student.setUnivercity("BSUIR");
+       student.setFaculty("CSN");
+       student.setGroup("250503");
+       student.setRoomNumber("222b");
+       studentService.updateStudentInformation(student);
+    }
 
     public StudentController(StudentService studentService) {
         this.studentService = studentService;

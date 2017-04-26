@@ -4,7 +4,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
-import testUser.DAO.UserDAO;
+import testUser.DAO.StudentDAO;
 import testUser.entities.*;
 
 import java.sql.ResultSet;
@@ -14,11 +14,28 @@ import java.util.List;
 /**
  * Created by dzbe1116 on 4/20/2017.
  */
-public class StudentDao implements UserDAO {
+public class JdbcStudentDao implements StudentDAO {
 
     private JdbcTemplate jdbcTemplate;
 
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @Override
+    public void updateStudentInformation(Student student) {
+        jdbcTemplate.update(SQL_UPDATE_STUDENT_INFO,
+                student.getName(),
+                student.getSurname(),
+                student.getUnivercity(),
+                student.getFaculty(),
+                student.getGroup(),
+                student.getRoomNumber(),
+                student.getId());
+    }
+
+    @Override
+    public void deleteFromWorkHoursHistory(int id) {
+        jdbcTemplate.update(SQL_DELETE_FROM_WORK_HISTORY, id);
+    }
 
     @Override
     public void addWorkHours(WorkHour workHour) {
@@ -40,7 +57,7 @@ public class StudentDao implements UserDAO {
         return student;
     };
 
-    public StudentDao(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    public JdbcStudentDao(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
