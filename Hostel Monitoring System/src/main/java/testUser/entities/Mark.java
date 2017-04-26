@@ -1,6 +1,7 @@
 package testUser.entities;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 /**
  * Created by dzbe1116 on 4/25/2017.

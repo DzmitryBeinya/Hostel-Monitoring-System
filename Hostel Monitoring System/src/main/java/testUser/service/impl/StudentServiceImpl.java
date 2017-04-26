@@ -3,6 +3,7 @@ package testUser.service.impl;
 import testUser.DAO.impl.StudentDao;
 import testUser.entities.Mark;
 import testUser.entities.Student;
+import testUser.entities.WorkHour;
 import testUser.service.StudentService;
 
 import java.util.List;
@@ -32,6 +33,12 @@ public class StudentServiceImpl implements StudentService {
     public void addStudent(Student student) {
         studentDao.addStudent(student);
     }
+
+    @Override
+    public void addWorkHours(WorkHour workHour) {
+        studentDao.addWorkHours(workHour);
+    }
+
     @Override
     public void addMark(Mark mark) {
         studentDao.addMark(mark);

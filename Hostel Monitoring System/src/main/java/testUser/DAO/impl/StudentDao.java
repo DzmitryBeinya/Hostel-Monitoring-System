@@ -5,16 +5,11 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import testUser.DAO.UserDAO;
-import testUser.entities.Mark;
-import testUser.entities.Room;
-import testUser.entities.Student;
-import testUser.entities.User;
+import testUser.entities.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by dzbe1116 on 4/20/2017.
@@ -24,6 +19,14 @@ public class StudentDao implements UserDAO {
     private JdbcTemplate jdbcTemplate;
 
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @Override
+    public void addWorkHours(WorkHour workHour) {
+        jdbcTemplate.update(SQL_ADD_WORK_HOURS,
+                workHour.getDate(),
+                workHour.getNumber(),
+                workHour.getStudentId());
+    }
 
     private final RowMapper<Student> ROW_MAPPER = (rs, rowNum) -> {
         Student student = new Student();
@@ -36,10 +39,6 @@ public class StudentDao implements UserDAO {
         student.setRoom(selectRoomByStudentIdwithJDBCTemplate(student.getId()));
         return student;
     };
-
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
 
     public StudentDao(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -83,12 +82,10 @@ public class StudentDao implements UserDAO {
 
     @Override
     public void addMark(Mark mark) {
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("id", 56);
-        params.put("mh_value", mark.getValue());
-        params.put("mh_date", mark.getDate());
-        params.put("mh_room", mark.getRoomNumber());
-        namedParameterJdbcTemplate.update(SQL_ADD_MARK, params);
+       jdbcTemplate.update(SQL_ADD_MARK,
+               mark.getValue(),
+               mark.getDate(),
+               mark.getRoomNumber());
     }
 
     private Room selectRoomByStudentIdwithJDBCTemplate(int id) {

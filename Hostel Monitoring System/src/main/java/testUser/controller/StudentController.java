@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import testUser.entities.Mark;
 import testUser.entities.Room;
 import testUser.entities.Student;
+import testUser.entities.WorkHour;
 import testUser.service.StudentService;
 
-import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -57,12 +60,23 @@ public class StudentController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/addMark")
-    public void addMark() {
+    public void addMark() throws ParseException {
         Mark mark = new Mark();
         mark.setValue(5);
-        mark.setDate(new Date(201744));
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        mark.setDate(simpleDateFormat.parse("20170404"));
         mark.setRoomNumber("111a");
         studentService.addMark(mark);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/addWorkHours")
+    public void addWorkHours() throws ParseException {
+        WorkHour workHour = new WorkHour();
+        workHour.setNumber(20);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        workHour.setDate(simpleDateFormat.parse("20170404"));
+        workHour.setStudentId(9);
+        studentService.addWorkHours(workHour);
     }
 
 

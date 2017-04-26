@@ -2,6 +2,7 @@ package testUser.service;
 
 import testUser.entities.Mark;
 import testUser.entities.Student;
+import testUser.entities.WorkHour;
 
 import java.util.List;
 
@@ -13,4 +14,5 @@ public interface StudentService {
     List<Student> getAllStudentsFromHostel();
     void addStudent(Student student);
     void addMark(Mark mark);
+    void addWorkHours(WorkHour workHour);
 }
