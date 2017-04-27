@@ -1,9 +1,6 @@
 package testUser.DAO;
 
-import testUser.entities.Mark;
-import testUser.entities.Student;
-import testUser.entities.User;
-import testUser.entities.WorkHour;
+import testUser.entities.*;
 
 import java.util.List;
 
@@ -20,6 +17,8 @@ public interface StudentDAO {
     void addWorkHours(WorkHour workHour);
     void deleteFromWorkHoursHistory(int id);
     void updateStudentInformation(Student student);
+    void deleteStudent(int id);
+    List<Room> selectRoomByFloor(int floor);
 
     String SQL_SELECT_STUDENT_BY_ID = "select * from student where id = ?";
     String SQL_SELECT_ROOM_BY_STUDENT_ID = "select r.ro_number,r.ro_places,r.ro_free_places, r.ro_floor from hostel_schema.room r\n" +
@@ -27,8 +26,8 @@ public interface StudentDAO {
             "on st.st_room = r.ro_number\n" +
             "where st.id = ?";
     String SQL_SELECT_ALL_STUDENTS_FROM_HOSTEL = "select * from hostel_schema.student";
-    String SQL_ADD_STUDENT = "insert into hostel_schema.student\n" +
-            "values(?, ?, ?, ?, ?, ?, ?)";
+    String SQL_ADD_STUDENT = "insert into hostel_schema.student(st_name, st_surname, st_university, st_faculty, st_group, st_room)\n" +
+            "values(?, ?, ?, ?, ?, ?)";
     String SQL_ADD_MARK =
             "insert into hostel_schema.mark_history(mh_value, mh_date, mh_room)\n" +
                     "values(?, ?, ?)";
@@ -44,4 +43,6 @@ public interface StudentDAO {
             "st_group = ?,\n" +
             "st_room = ?\n" +
             "where id = ?;";
+    String SQL_DELETE_STUDENT = "delete FROM hostel_schema.student where id = ?";
+    String SQL_VIEW_ROOMS_BY_FLOOR = "select * from hostel_schema.room where ro_floor = ?";
 }

@@ -1,6 +1,7 @@
 package testUser.service;
 
 import testUser.entities.Mark;
+import testUser.entities.Room;
 import testUser.entities.Student;
 import testUser.entities.WorkHour;
 
@@ -17,4 +18,6 @@ public interface StudentService {
     void addWorkHours(WorkHour workHour);
     void deleteWorkHours(int id);
     void updateStudentInformation(Student student);
+    void deleteStudent(int id);
+    List<Room> getAllRoomsFromFloor(int floor);
 }

@@ -31,7 +31,15 @@ public class StudentController {
 //        return "hello";
 //    }
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/students")
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/getRooms/{id}")
+    @ResponseBody
+    public List<Room> getAllRoomsFromFloor(@PathVariable("id") int floor) {
+        List<Room> allRoomsFromFloor= studentService.getAllRoomsFromFloor(floor);
+
+        return allRoomsFromFloor;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/getRooms")
     @ResponseBody
     public List<Student> getAllStudentsFromHostel(Model model) {
         List<Student> allStudentsFromHostel= studentService.getAllStudentsFromHostel();
@@ -39,17 +47,15 @@ public class StudentController {
         return allStudentsFromHostel;
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/hostel_schema/student/{id}")
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/getStudent/{id}")
     @ResponseBody
     public Student getStudentById(@PathVariable("id") int id) {
         return studentService.getStudentById(id);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/add")
+    @RequestMapping(method = RequestMethod.GET, value = "/addStudent")
     public void addStudent() {
-        //Room room = new Room("111b", 5, 5, 1);
         Student student = new Student();
-        student.setId(15);
         student.setName("Stas");
         student.setSurname("Malina");
         student.setUnivercity("BSUIR");
@@ -82,6 +88,11 @@ public class StudentController {
     @RequestMapping(method = RequestMethod.GET, value = "/deleteWorkHours/{id}")
     public void deleteWorkHours(@PathVariable("id") int id) throws ParseException {
         studentService.deleteWorkHours(id);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/deleteStudent/{id}")
+    public void deleteStudent(@PathVariable("id") int id) {
+        studentService.deleteStudent(id);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/updateStudent")

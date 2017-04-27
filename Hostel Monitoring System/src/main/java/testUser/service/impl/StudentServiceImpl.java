@@ -4,6 +4,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import testUser.DAO.impl.JdbcStudentDao;
 import testUser.entities.Mark;
+import testUser.entities.Room;
 import testUser.entities.Student;
 import testUser.entities.WorkHour;
 import testUser.service.StudentService;
@@ -33,6 +34,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public List<Room> getAllRoomsFromFloor(int floor) {
+        return jdbcStudentDao.selectRoomByFloor(floor);
+    }
+
+    @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void addStudent(Student student) {
         jdbcStudentDao.addStudent(student);
@@ -42,6 +48,12 @@ public class StudentServiceImpl implements StudentService {
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     public void updateStudentInformation(Student student) {
         jdbcStudentDao.updateStudentInformation(student);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+    public void deleteStudent(int id) {
+        jdbcStudentDao.deleteStudent(id);
     }
 
     @Override

@@ -1,10 +1,7 @@
 package testUser.DAO.impl;
 
 import testUser.DAO.StudentDAO;
-import testUser.entities.Mark;
-import testUser.entities.Student;
-import testUser.entities.User;
-import testUser.entities.WorkHour;
+import testUser.entities.*;
 
 import java.util.List;
 
@@ -54,6 +51,16 @@ public class HibernateStudentDao implements StudentDAO {
 
     @Override
     public void updateStudentInformation(Student student) {
+
+    }
+
+    @Override
+    public List<Room> selectRoomByFloor(int floor) {
+        return null;
+    }
+
+    @Override
+    public void deleteStudent(int id) {
 
     }
 }
