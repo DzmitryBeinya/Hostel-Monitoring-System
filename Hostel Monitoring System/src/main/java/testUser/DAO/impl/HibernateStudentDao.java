@@ -9,10 +9,6 @@ import java.util.List;
  * Created by dzbe1116 on 4/26/2017.
  */
 public class HibernateStudentDao implements StudentDAO {
-    @Override
-    public User selectUserByName(String name) {
-        return null;
-    }
 
     @Override
     public Student selectStudentById(int id) {
@@ -20,8 +16,18 @@ public class HibernateStudentDao implements StudentDAO {
     }
 
     @Override
-    public Student selectStudentByIdWithJDBCTemplate(int id) {
-        return null;
+    public void updateRebuke(Rebuke rebuke) {
+
+    }
+
+    @Override
+    public void deleteRebuke(int id) {
+
+    }
+
+    @Override
+    public void addRebuke(Rebuke rebuke) {
+
     }
 
     @Override

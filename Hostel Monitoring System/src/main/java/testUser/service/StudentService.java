@@ -1,9 +1,6 @@
 package testUser.service;
 
-import testUser.entities.Mark;
-import testUser.entities.Room;
-import testUser.entities.Student;
-import testUser.entities.WorkHour;
+import testUser.entities.*;
 
 import java.util.List;
 
@@ -15,9 +12,12 @@ public interface StudentService {
     List<Student> getAllStudentsFromHostel();
     void addStudent(Student student);
     void addMark(Mark mark);
+    void addRebuke(Rebuke rebuke);
     void addWorkHours(WorkHour workHour);
     void deleteWorkHours(int id);
+    void deleteRebuke(int id);
     void updateStudentInformation(Student student);
+    void updateRebukeInformation(Rebuke rebuke);
     void deleteStudent(int id);
     List<Room> getAllRoomsFromFloor(int floor);
 }

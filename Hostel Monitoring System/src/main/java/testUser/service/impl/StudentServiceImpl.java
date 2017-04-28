@@ -3,10 +3,7 @@ package testUser.service.impl;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import testUser.DAO.impl.JdbcStudentDao;
-import testUser.entities.Mark;
-import testUser.entities.Room;
-import testUser.entities.Student;
-import testUser.entities.WorkHour;
+import testUser.entities.*;
 import testUser.service.StudentService;
 
 import java.util.List;
@@ -17,7 +14,7 @@ import java.util.List;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class StudentServiceImpl implements StudentService {
 
-    JdbcStudentDao jdbcStudentDao;
+    private JdbcStudentDao jdbcStudentDao;
 
     public StudentServiceImpl(JdbcStudentDao jdbcStudentDao) {
         this.jdbcStudentDao = jdbcStudentDao;
@@ -25,12 +22,37 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student getStudentById(int id) {
-        return jdbcStudentDao.selectStudentByIdWithJDBCTemplate(id);
+        return jdbcStudentDao.selectStudentById(id);
+    }
+
+    @Override
+    public void updateRebukeInformation(Rebuke rebuke) {
+        jdbcStudentDao.updateRebuke(rebuke);
+    }
+
+    @Override
+    public void deleteRebuke(int id) {
+        jdbcStudentDao.deleteRebuke(id);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+    public void addRebuke(Rebuke rebuke) {
+        jdbcStudentDao.addRebuke(rebuke);
     }
 
     @Override
     public List<Student> getAllStudentsFromHostel() {
-        return jdbcStudentDao.selectAllStudentsFromHostel();
+        List<Student> studentList = null;
+
+        long start = System.nanoTime();
+        for(int i = 0; i<1000; i++) {
+            studentList = jdbcStudentDao.selectAllStudentsFromHostel();
+        }
+        long end = System.nanoTime();
+
+        System.out.println(end-start);
+        return studentList;
     }
 
     @Override

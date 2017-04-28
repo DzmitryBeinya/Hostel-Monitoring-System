@@ -2,13 +2,11 @@ package testUser.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import testUser.entities.Mark;
-import testUser.entities.Room;
-import testUser.entities.Student;
-import testUser.entities.WorkHour;
+import testUser.entities.*;
 import testUser.service.StudentService;
 
 import java.text.ParseException;
@@ -39,7 +37,7 @@ public class StudentController {
         return allRoomsFromFloor;
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/getRooms")
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/getStudents")
     @ResponseBody
     public List<Student> getAllStudentsFromHostel(Model model) {
         List<Student> allStudentsFromHostel= studentService.getAllStudentsFromHostel();
@@ -75,6 +73,18 @@ public class StudentController {
         studentService.addMark(mark);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/addRebuke")
+    public void addRebuke() throws ParseException {
+        Rebuke rebuke = new Rebuke();
+        rebuke.setName("university");
+        rebuke.setRank(3);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        rebuke.setStartDate(simpleDateFormat.parse("20170404"));
+        rebuke.setEndDate(simpleDateFormat.parse("20170505"));
+        rebuke.setStudentId(3);
+        studentService.addRebuke(rebuke);
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/addWorkHours")
     public void addWorkHours() throws ParseException {
         WorkHour workHour = new WorkHour();
@@ -88,6 +98,11 @@ public class StudentController {
     @RequestMapping(method = RequestMethod.GET, value = "/deleteWorkHours/{id}")
     public void deleteWorkHours(@PathVariable("id") int id) throws ParseException {
         studentService.deleteWorkHours(id);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/deleteRebuke/{id}")
+    public void deleteRebuke(@PathVariable("id") int id) throws ParseException {
+        studentService.deleteRebuke(id);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/deleteStudent/{id}")
@@ -106,6 +121,19 @@ public class StudentController {
        student.setGroup("250503");
        student.setRoomNumber("222b");
        studentService.updateStudentInformation(student);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/updateRebuke")
+    public void updateRebukeInformation() throws ParseException {
+        Rebuke rebuke = new Rebuke();
+        rebuke.setId(6);
+        rebuke.setName("hostel");
+        rebuke.setRank(2);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        rebuke.setStartDate(simpleDateFormat.parse("20160404"));
+        rebuke.setEndDate(simpleDateFormat.parse("20160505"));
+        rebuke.setStudentId(7);
+        studentService.updateRebukeInformation(rebuke);
     }
 
     public StudentController(StudentService studentService) {

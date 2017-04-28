@@ -1,5 +1,6 @@
 package testUser.DAO.impl;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -52,10 +53,35 @@ public class JdbcStudentDao implements StudentDAO {
         student.setSurname(rs.getString(3));
         student.setUnivercity(rs.getString(4));
         student.setFaculty(rs.getString(5));
-        student.setGroup(rs.getString(6));
-        student.setRoom(selectRoomByStudentIdwithJDBCTemplate(student.getId()));
+        student.setRoom(selectRoomByStudentId(student.getId()));
         return student;
     };
+
+    @Override
+    public void updateRebuke(Rebuke rebuke) {
+        jdbcTemplate.update(SQL_UPDATE_REBUKE,
+                rebuke.getName(),
+                rebuke.getRank(),
+                rebuke.getStartDate(),
+                rebuke.getEndDate(),
+                rebuke.getStudentId(),
+                rebuke.getId());
+    }
+
+    @Override
+    public void deleteRebuke(int id) {
+        jdbcTemplate.update(SQL_DELETE_REBUKE, id);
+    }
+
+    @Override
+    public void addRebuke(Rebuke rebuke) {
+        jdbcTemplate.update(SQL_ADD_REBUKE,
+                rebuke.getName(),
+                rebuke.getRank(),
+                rebuke.getStartDate(),
+                rebuke.getEndDate(),
+                rebuke.getStudentId());
+    }
 
     private final RowMapper<Room> ROW_MAPPER_ROOM = (rs, rowNum) -> {
         Room room = new Room();
@@ -66,31 +92,42 @@ public class JdbcStudentDao implements StudentDAO {
         return room;
     };
 
+    private final RowMapper<Student> studentRowMapper = new RowMapper<Student>() {
+        @Override
+        public Student mapRow(ResultSet rs, int i) throws SQLException {
+            Student student = new Student();
+            student.setId(rs.getInt(1));
+            student.setName(rs.getString(2));
+            student.setSurname(rs.getString(3));
+            student.setUnivercity(rs.getString(4));
+            student.setFaculty(rs.getString(5));
+
+            Room room = new Room();
+            room.setNumber(rs.getString(6));
+            room.setPlaces(rs.getInt(7));
+            room.setFree_places(rs.getInt(8));
+            room.setFloor(rs.getInt(9));
+            student.setRoom(room);
+            return student;
+        }
+    };
+
     public JdbcStudentDao(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
     @Override
-
-    public User selectUserByName(String name) {
-        return null;
-    }
-
-    @Override
     public Student selectStudentById(int id) {
-        return null;
-    }
 
-    @Override
-    public Student selectStudentByIdWithJDBCTemplate(int id) {
-        return jdbcTemplate.queryForObject(SQL_SELECT_STUDENT_BY_ID, ROW_MAPPER_STUDENT, id);
+            return jdbcTemplate.queryForObject(SQL_SELECT_STUDENT_BY_ID, ROW_MAPPER_STUDENT, id);
+
     }
 
     @Override
     public List<Student> selectAllStudentsFromHostel() {
-        List<Student> allStudentsFromHostel = this.jdbcTemplate.query(SQL_SELECT_ALL_STUDENTS_FROM_HOSTEL,
-                ROW_MAPPER_STUDENT);
+        List<Student> allStudentsFromHostel = this.jdbcTemplate.query(SELECT_STUDENTS_WITH_ROOM,
+                studentRowMapper);
         return allStudentsFromHostel;
     }
 
@@ -124,7 +161,7 @@ public class JdbcStudentDao implements StudentDAO {
                mark.getRoomNumber());
     }
 
-    private Room selectRoomByStudentIdwithJDBCTemplate(int floor) {
-        return jdbcTemplate.queryForObject(SQL_VIEW_ROOMS_BY_FLOOR, ROW_MAPPER_ROOM, floor);
+    private Room selectRoomByStudentId(int id) {
+        return jdbcTemplate.queryForObject(SQL_SELECT_ROOM_BY_STUDENT_ID, ROW_MAPPER_ROOM, id);
     }
 }
