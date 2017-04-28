@@ -26,6 +26,17 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public List<Integer> selectMarksOfRoom(String roomNumber) {
+        return jdbcStudentDao.selectMarksOfRoom(roomNumber);
+    }
+
+    @Override
+    public List<WorkHour> getWorkHoursOfStudent(int studentId) {
+        List<WorkHour> studentList = jdbcStudentDao.selectWorkHoursOfStudent(studentId);
+        return studentList;
+    }
+
+    @Override
     public void updateRebukeInformation(Rebuke rebuke) {
         jdbcStudentDao.updateRebuke(rebuke);
     }

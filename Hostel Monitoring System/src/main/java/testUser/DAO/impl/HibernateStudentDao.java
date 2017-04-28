@@ -16,6 +16,16 @@ public class HibernateStudentDao implements StudentDAO {
     }
 
     @Override
+    public List<Integer> selectMarksOfRoom(String roomNumber) {
+        return null;
+    }
+
+    @Override
+    public List<WorkHour> selectWorkHoursOfStudent(int studentId) {
+        return null;
+    }
+
+    @Override
     public void updateRebuke(Rebuke rebuke) {
 
     }

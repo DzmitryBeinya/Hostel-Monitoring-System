@@ -58,6 +58,18 @@ public class JdbcStudentDao implements StudentDAO {
     };
 
     @Override
+    public List<Integer> selectMarksOfRoom(String roomNumber) {
+        List<Integer> marks = jdbcTemplate.queryForList(SQL_SELECT_MARKS_OF_ROOM, Integer.class, roomNumber);
+        return marks;
+    }
+
+    @Override
+    public List<WorkHour> selectWorkHoursOfStudent(int studentId) {
+        List<WorkHour> workHours = jdbcTemplate.query(SQL_SELECT_WORK_HOURS_BY_STUDENT_ID, ROW_MAPPER_WORK_HOUR, studentId);
+        return workHours;
+    }
+
+    @Override
     public void updateRebuke(Rebuke rebuke) {
         jdbcTemplate.update(SQL_UPDATE_REBUKE,
                 rebuke.getName(),
@@ -90,6 +102,14 @@ public class JdbcStudentDao implements StudentDAO {
         room.setFree_places(rs.getInt(3));
         room.setFloor(rs.getInt(4));
         return room;
+    };
+
+    private final RowMapper<WorkHour> ROW_MAPPER_WORK_HOUR = (rs, rowNum) -> {
+        WorkHour workHour = new WorkHour();
+        workHour.setDate(rs.getDate(2));
+        workHour.setNumber(rs.getInt(3));
+        workHour.setStudentId(rs.getInt(4));
+        return workHour;
     };
 
     private final RowMapper<Student> studentRowMapper = new RowMapper<Student>() {

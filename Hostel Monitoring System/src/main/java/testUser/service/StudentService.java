@@ -20,4 +20,6 @@ public interface StudentService {
     void updateRebukeInformation(Rebuke rebuke);
     void deleteStudent(int id);
     List<Room> getAllRoomsFromFloor(int floor);
+    List<WorkHour> getWorkHoursOfStudent(int studentId);
+    List<Integer> selectMarksOfRoom(String roomNumber);
 }

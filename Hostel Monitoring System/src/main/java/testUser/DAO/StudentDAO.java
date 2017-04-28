@@ -8,10 +8,9 @@ import java.util.List;
  * Created by dzbe1116 on 4/19/2017.
  */
 public interface StudentDAO {
-//    User selectUserByName(String name);
     Student selectStudentById(int id);
-//    Student selectStudentByIdWithJDBCTemplate(int id);
     List<Student> selectAllStudentsFromHostel();
+    List<WorkHour> selectWorkHoursOfStudent(int studentId);
     void addStudent(Student student);
     void addMark(Mark mark);
     void addRebuke(Rebuke rebuke);
@@ -22,6 +21,7 @@ public interface StudentDAO {
     void updateRebuke(Rebuke rebuke);
     void deleteStudent(int id);
     List<Room> selectRoomByFloor(int floor);
+    List<Integer> selectMarksOfRoom(String roomNumber);
 
     String SQL_SELECT_STUDENT_BY_ID = "select * from student where id = ?";
     String SQL_SELECT_ROOM_BY_STUDENT_ID = "select r.ro_number,r.ro_places,r.ro_free_places, r.ro_floor from hostel_schema.room r\n" +
@@ -60,4 +60,7 @@ public interface StudentDAO {
             "rebh_end_date = ?,\n" +
             "rebh_student = ?\n" +
             "where id = ?";
+    String SQL_SELECT_WORK_HOURS_BY_STUDENT_ID = "SELECT * FROM hostel_schema.work_hours_history\n" +
+            "where wh_student = ?";
+    String SQL_SELECT_MARKS_OF_ROOM = "select mh_value from mark_history where mh_room = ?";
 }

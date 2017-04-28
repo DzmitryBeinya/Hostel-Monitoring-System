@@ -37,6 +37,20 @@ public class StudentController {
         return allRoomsFromFloor;
     }
 
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/getWorkHours/{id}")
+    @ResponseBody
+    public List<WorkHour> getWorkHoursByStudentId(@PathVariable("id") int studentId) {
+        List<WorkHour> workHours= studentService.getWorkHoursOfStudent(studentId);
+        return workHours;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/getMarks/{id}")
+    @ResponseBody
+    public List<Integer> getMarksOfRoom(@PathVariable("id") String roomNumber) {
+        List<Integer> marks = studentService.selectMarksOfRoom(roomNumber);
+        return marks;
+    }
+
     @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/getStudents")
     @ResponseBody
     public List<Student> getAllStudentsFromHostel(Model model) {
