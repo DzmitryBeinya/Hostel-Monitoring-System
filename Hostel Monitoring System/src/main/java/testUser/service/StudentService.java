@@ -22,4 +22,5 @@ public interface StudentService {
     List<Room> getAllRoomsFromFloor(int floor);
     List<WorkHour> getWorkHoursOfStudent(int studentId);
     List<Integer> selectMarksOfRoom(String roomNumber);
+    List<Room> selectAllRooms();
 }

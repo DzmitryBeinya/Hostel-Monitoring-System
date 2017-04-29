@@ -163,6 +163,12 @@ public class JdbcStudentDao implements StudentDAO {
     }
 
     @Override
+    public List<Room> selectAllRooms() {
+        List<Room> rooms = jdbcTemplate.query(SQL_SELECT_ALL_ROOMS, ROW_MAPPER_ROOM);
+        return rooms;
+    }
+
+    @Override
     public void addStudent(Student student) {
         jdbcTemplate.update(SQL_ADD_STUDENT,
                 student.getName(),

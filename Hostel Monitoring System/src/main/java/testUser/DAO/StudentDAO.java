@@ -22,6 +22,7 @@ public interface StudentDAO {
     void deleteStudent(int id);
     List<Room> selectRoomByFloor(int floor);
     List<Integer> selectMarksOfRoom(String roomNumber);
+    List<Room> selectAllRooms();
 
     String SQL_SELECT_STUDENT_BY_ID = "select * from student where id = ?";
     String SQL_SELECT_ROOM_BY_STUDENT_ID = "select r.ro_number,r.ro_places,r.ro_free_places, r.ro_floor from hostel_schema.room r\n" +
@@ -63,4 +64,5 @@ public interface StudentDAO {
     String SQL_SELECT_WORK_HOURS_BY_STUDENT_ID = "SELECT * FROM hostel_schema.work_hours_history\n" +
             "where wh_student = ?";
     String SQL_SELECT_MARKS_OF_ROOM = "select mh_value from mark_history where mh_room = ?";
+    String SQL_SELECT_ALL_ROOMS = "SELECT * FROM room";
 }

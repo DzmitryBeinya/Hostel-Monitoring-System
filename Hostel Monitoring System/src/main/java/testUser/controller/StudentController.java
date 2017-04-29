@@ -1,5 +1,6 @@
 package testUser.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -29,12 +30,19 @@ public class StudentController {
 //        return "hello";
 //    }
 
+
     @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/getRooms/{id}")
     @ResponseBody
     public List<Room> getAllRoomsFromFloor(@PathVariable("id") int floor) {
         List<Room> allRoomsFromFloor= studentService.getAllRoomsFromFloor(floor);
-
         return allRoomsFromFloor;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/getRooms")
+    @ResponseBody
+    public List<Room> getAllRooms() {
+        List<Room> allRooms= studentService.selectAllRooms();
+        return allRooms;
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = "application/json", value = "/getWorkHours/{id}")

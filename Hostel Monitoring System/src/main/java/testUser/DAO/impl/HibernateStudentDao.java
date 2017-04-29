@@ -16,6 +16,11 @@ public class HibernateStudentDao implements StudentDAO {
     }
 
     @Override
+    public List<Room> selectAllRooms() {
+        return null;
+    }
+
+    @Override
     public List<Integer> selectMarksOfRoom(String roomNumber) {
         return null;
     }
